@@ -481,6 +481,10 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
                 )
                 Log.e(TAG, "onDescriptorWriteRequest, uuid: " + descriptor.uuid)
             }
+
+            override fun onMtuChanged(  device: BluetoothDevice?,int mtu){
+
+            }
         }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {

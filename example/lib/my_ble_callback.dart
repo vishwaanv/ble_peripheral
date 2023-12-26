@@ -60,4 +60,13 @@ class MyBleCallback extends BleCallback {
       value: Uint8List.fromList([]),
     );
   }
+
+  @override
+  void onMtuChanged( device: BluetoothDevice?,int mtu) {
+   // Get.log("onMtuChanged: ${central.uuid.value} : $mtu");
+    // Handle MTU change
+  }
+
+
+
 }
