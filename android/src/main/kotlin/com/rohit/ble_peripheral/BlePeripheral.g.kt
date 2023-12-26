@@ -539,4 +539,16 @@ class BleCallback(private val binaryMessenger: BinaryMessenger) {
       callback()
     }
   }
+
+
+  fun onMtuChanged(bleCentralArg: BleCentral, mtuArg: Long, callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(
+      binaryMessenger,
+      "dev.flutter.pigeon.ble_peripheral.BleCallback.onMtuChanged",
+      codec
+    )
+    channel.send(listOf(bleCentralArg, mtuArg)) {
+      callback()
+    }
+  }
 }
