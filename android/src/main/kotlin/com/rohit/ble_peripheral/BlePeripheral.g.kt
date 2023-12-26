@@ -394,6 +394,31 @@ interface BlePeripheralChannel {
           channel.setMessageHandler(null)
         }
       }
+      run {
+        val channel = BasicMessageChannel<Any?>(
+          binaryMessenger,
+          "dev.flutter.pigeon.ble_peripheral.BleCallback.onMtuChanged",
+          codec
+        )
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val deviceArg = args[0] as BluetoothDevice
+            val mtuArg = args[1] as Int
+            var wrapped: List<Any?>
+            try {
+              api.onMtuChanged(deviceArg, mtuArg)
+              wrapped = listOf<Any?>(null)
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+
     }
   }
 }
@@ -541,7 +566,7 @@ class BleCallback(private val binaryMessenger: BinaryMessenger) {
   }
 
 
-  fun onMtuChanged(bleCentralArg: BleCentral, mtuArg: Long, callback: () -> Unit) {
+  fun onMtuChanged(device: BluetoothDevice, mtuArg: int, callback: () -> Unit) {
     val channel = BasicMessageChannel<Any?>(
       binaryMessenger,
       "dev.flutter.pigeon.ble_peripheral.BleCallback.onMtuChanged",
