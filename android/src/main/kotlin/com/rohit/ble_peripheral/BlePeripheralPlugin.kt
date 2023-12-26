@@ -483,7 +483,7 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
             }
 
             override fun onMtuChanged(  device: BluetoothDevice?,int mtu){
-
+                
             }
         }
 
